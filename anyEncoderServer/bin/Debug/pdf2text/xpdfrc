@@ -1,0 +1,11 @@
+textEncoding		UTF-8
+#textEOL		doc
+#----- begin Chinese Simplified support package (2004-jul-27)
+cidToUnicode	Adobe-GB1	c:/chs/Adobe-GB1.cidToUnicode
+unicodeMap	ISO-2022-CN	c:/chs/ISO-2022-CN.unicodeMap
+unicodeMap	EUC-CN		c:/chs/EUC-CN.unicodeMap
+unicodeMap	GBK		c:/chs/GBK.unicodeMap
+cMapDir		Adobe-GB1	c:/chs/CMap
+toUnicodeDir			c:/chs/CMap
+#displayCIDFontTT	Adobe-GB1	/usr/..../gkai00mp.ttf
+#----- end Chinese Simplified support package

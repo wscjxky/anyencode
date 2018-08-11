@@ -1,0 +1,17 @@
+境界@2016-8-21:
+在vodFiles里面新增命令处理代码:Delete删除用户上传的原始文件\转码之后的文件\图标文件,以及数据库ov_files里面对应的记录.
+无法处理的:位于七牛云存储上的路径在转码服务器上没有存储,所以无法删除.需要在网站客户端删除,或者在转码服务器上再存一份.
+
+调用接口:
+http://123.57.157.64:8080/query.aspx?action=delete&filecode=filecode字符串&perID=73d2428effef619d51d8bcca966f7d98
+返回值:
+"perID Invalid":perID不对
+"elete File Done":删除完毕或者文件已不存在.
+
+代码修改记录:
+vodFile\query.aspx.cs:85-207行.
+
+更新动态库:
+vodFile\bin\VodFile.dll --> 服务器C:\stream\bin\VodFile.dll.
+
+

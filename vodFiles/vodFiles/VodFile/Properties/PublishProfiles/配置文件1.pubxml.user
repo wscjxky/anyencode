@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+您 Web 项目的发布/打包进程将使用此文件。您可以通过编辑此 MSBuild 文件
+来自定义该进程的行为。若要了解与此相关的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile>2015-10-26T15:56:31.5299484+08:00</TimeStampOfAssociatedLegacyPublishXmlFile>
+    <_PublishTargetUrl>D:\rjwork\Pass\vodFiles\publish</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="AllowDomain.xml">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="bin/Brettle.Web.NeatUpload.dll">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="bin/MySql.Data.dll">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="bin/System.Web.Silverlight.resources.dll">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="bin/VodFile.dll">
+      <publishTime>04/13/2016 15:32:20</publishTime>
+    </File>
+    <File Include="crossdomain.xml">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="css/buttons.css">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="css/newupload.css">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="css/upload.css">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="download.aspx">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="Edge_Recoder.aspx">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="images/audio.jpg">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/bg.jpg">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/error.gif">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/nbg.png">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/nopic.jpg">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/page_white_add.png">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/sep.png">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/toobig.gif">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/uploadlimit.gif">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/XPButtonNoText_160x22.png">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="images/zerobyte.gif">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="js/jquery.js">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="js/offlights.js">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="newindex.aspx">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="query.aspx">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="rightmeniu.js">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.1-vsdoc.js">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.1.js">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.1.min.js">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.4.3.min.js">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="Scripts/newuploader.js">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="Scripts/swfupload.js">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="Scripts/uploader.js">
+      <publishTime>10/26/2015 15:56:31</publishTime>
+    </File>
+    <File Include="statusQuery.aspx">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="swfupload/swfupload.swf">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="upload.aspx">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="user.png">
+      <publishTime>10/26/2015 15:56:32</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>04/12/2016 13:56:02</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,202 @@
+*{
+    margin: 0px ;
+    padding: 0px;
+}
+th {
+	text-align: left;
+	font-style: inherit;
+	font-weight: inherit;
+}
+
+.photo-uploader {
+	width: 620px;
+}
+
+.photo-uploader .files-box {
+	margin-bottom: 20px;
+	font-size: 12px;
+	font-family: Tahoma,Verdana,STHeiTi,simsun,sans-serif;
+}
+
+.photo-uploader .files {
+	padding: 15px 0;
+	position: relative;
+}
+
+.photo-uploader .files table {
+	table-layout: fixed;
+	width: 100%;
+}
+
+.photo-uploader .files col.file {
+	width: 35%;
+}
+
+.photo-uploader .files col.size {
+	width: 15%;
+}
+
+.photo-uploader .files col.status {
+	width: 30%;
+}
+
+.photo-uploader .files col.opt {
+	width: 20%;
+}
+
+.photo-uploader .files th.opt {
+	text-align: center;
+}
+
+.photo-uploader .files .thead {
+	-moz-box-sizing: border-box;
+	background-color: #DDDDDD;
+	color: #999999;
+	padding-right: 20px;
+	position: absolute;
+	top: 0;
+	width: 97%;
+}
+
+.photo-uploader .files .tfoot {
+	background-color: #E4E4E4;
+	bottom: 0;
+	font-weight: bold;
+	position: absolute;
+	width: 100%;
+}
+
+.photo-uploader .files .tbody {
+	background-color: #333333;
+	border: 1px solid #E4E4E4;
+	height: 520px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+    color:#FFFFFF;
+}
+div.tbody{
+    border: 2px solid darkslategray;;
+}
+
+.poto-uploaderh .files tr {
+	line-height: 2em;
+}
+
+.photo-uploader .files th,.photo-uploader .files td {
+	border-bottom: 1px solid #E4E4E4;
+	overflow: hidden;
+	padding: 0 10px;
+	white-space: nowrap;
+}
+
+.photo-uploader .files td.opt {
+	text-align: center;
+}
+
+.photo-uploader .files-info {
+	margin-bottom: 10px;
+	text-align: left;
+}
+
+.photo-uploader .selected {
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+.photo-uploader .files-info p {
+	float: left;
+	font-weight: bold;
+	line-height: 2em;
+}
+
+.photo-uploader .selected p {
+	display: block;
+	margin: 0;
+}
+
+.photo-uploader .files-info em {
+	color: #808080;
+	font-style: normal;
+	font-weight: normal;
+}
+
+.photo-uploader .files-info a.tip {
+	background: url("http://a.xnimg.cn/n/apps/photo/res/bulb-bullet.png")
+		no-repeat scroll left center transparent;
+	padding-left: 12px;
+}
+
+.photo-uploader .files-info .tooltiptrigger {
+	display: inline-block;
+	height: 26px;
+	margin-left: 20px;
+	position: relative;
+	vertical-align: middle;
+}
+
+.photo-uploader .selected .tooltiptrigger {
+	display: none;
+}
+
+.photo-uploader .files-info .tooltippointer {
+	background:
+		url("http://a.xnimg.cn/n/apps/photo/modules/uploader/cssimg/tip-pointer.png")
+		no-repeat scroll center center transparent;
+	bottom: 0;
+	display: inline-block;
+	height: 10px;
+	left: 50%;
+	margin-bottom: -1px;
+	position: absolute;
+	width: 19px;
+	z-index: 1;
+}
+
+.photo-uploader .files-info .tooltipcontent {
+	background-color: #FFFDD4;
+	border: 1px solid #CCCCCC;
+	padding: 20px;
+}
+
+.photo-uploader .upload-hint {
+	color: #808080;
+	line-height: 2em;
+}
+
+.photo-uploader button[type="submit"] {
+	font-size: 14px;
+	font-weight: bold;
+	height: 32px;
+	padding: 5px 20px;
+}
+
+.photo-uploader .uploading-box {
+	margin: 0 auto;
+	width: 380px;
+}
+
+.photo-uploader .uploading-box h3 {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.photo-uploader .uploading-box p.info {
+	color: #999999;
+}
+
+.photo-uploader .uploading-box p.progress {
+	margin: 20px 0;
+}
+
+.photo-uploader .uploading-box progress {
+	background:
+		url("http://a.xnimg.cn/n/apps/photo/modules/uploader/cssimg/progress.png")
+		repeat-x scroll -900px center #FFFFFF;
+	border-left: 1px solid #005EAC;
+	border-right: 1px solid #B8D4E8;
+	color: #FFFFFF;
+	display: block;
+	height: 19px;
+	line-height: 19px;
+	padding-left: 5px;
+}
