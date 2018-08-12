@@ -28,7 +28,7 @@
         {
             get
             {
-                return ("Data Source=" + configini.ReadString("system", "sqlserver", "") + ";Initial Catalog=" + configini.ReadString("system", "database", "") + ";user id=" + configini.ReadString("system", "username", "") + ";password=" + configini.ReadString("system", "password", ""));
+                return ("Data Source=123.57.157.64,58522\\SQLEXPRESS;Initial Catalog=voddb;user id=sa;password=HuiTeng168;MultipleActiveResultSets=True;");
             }
         }
 

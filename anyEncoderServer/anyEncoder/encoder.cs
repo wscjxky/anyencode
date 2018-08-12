@@ -2,6 +2,8 @@
 {
     using System;
     using System.Data;
+    using System.Collections.Generic;
+    using System.Web;
     using System.Diagnostics;
     using System.IO;
     using System.Text.RegularExpressions;
@@ -12,6 +14,8 @@
     using Qiniu.Conf;
     using Qiniu.IO;
     using Qiniu.RS;
+    using System.Text;
+    using System.Data.SqlClient;
 
     class Upoader
     {
@@ -30,17 +34,17 @@
 
 
         }
-        public string PutFile( string key, string fname)
+        public string PutFile(string key, string fname)
         {
             _putfileRet = "";
-            var policy = new PutPolicy(_bucket,7200);
+            var policy = new PutPolicy(_bucket, 7200);
             string upToken = policy.Token();
             PutExtra extra = new PutExtra();
             IOClient client = new IOClient();
             PutRet ret = client.PutFile(upToken, key, fname, extra);
             if (!ret.OK)
             {
-                _putfileRet = string.Format("fsizelimit={0},deadline={1}",policy.FsizeLimit, policy.Deadline) + ret.Response + "***exception:" + ret.Exception.ToString();
+                _putfileRet = string.Format("fsizelimit={0},deadline={1}", policy.FsizeLimit, policy.Deadline) + ret.Response + "***exception:" + ret.Exception.ToString();
             }
             return _putfileRet;
         }
@@ -70,6 +74,8 @@
         private string fname;
         public Form formobj;
         private string id;
+        private int trancode;
+
         private string weburl;
         private string imgdir;
         private string isrec;
@@ -170,9 +176,13 @@
             DataView defaultView = null;
             this.errcount = 0;
             this.AppendLog("开始读取数据库");
+
+            
+            
             try
             {
                 defaultView = Conn.GetDataSet("select top 1 * from ov_files where stat=0 and isdel=0 and filetype=0 and errcount<" + num + "order by id asc").Tables[0].DefaultView;
+
             }
             catch (Exception exception)
             {
@@ -186,11 +196,10 @@
                 currentTime = System.DateTime.Now;
                 string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
                 this.statini = new IniFiles(string.Concat(new object[] { Application.StartupPath, @"\log\stat_", strlogfilename, ".ini" }));
-
                 this.id = defaultView[0]["id"].ToString();
                 this.weburl = defaultView[0]["webserver"].ToString();
                 Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
-                this.errcount = (int) defaultView[0]["errcount"];
+                this.errcount = (int)defaultView[0]["errcount"];
                 this.truedir = defaultView[0]["truedir"].ToString();
                 this.filesize = func.GetInt(defaultView[0]["filesize"].ToString());
                 this.addtime = this.truedir + defaultView[0]["truedir"].ToString();
@@ -207,6 +216,11 @@
                 this.file_out = this.truedir + defaultView[0]["filedir"].ToString() + @"\" + this.outfilename;
                 this.file_swf = this.file_out.Replace(".flv", ".swf").Replace(".mp4", ".swf");
                 this.file_log = Application.StartupPath + @"\log\encoder_" + this.outfilename + ".log";
+
+                this.trancode = (int)defaultView[0]["trancode"];
+                this.AppendLog("展示1：" + this.trancode.ToString());
+
+
                 if (func.Right(this.outfilename, 4) == ".mp4")
                 {
                     this.outfiletype = "mp4";
@@ -222,7 +236,7 @@
                 catch
                 {
                 }
-                this.AppendLog("开始处理文件：" + this.fname + "," + func.ShowSize((float) this.filesize));
+                this.AppendLog("开始处理文件：" + this.fname + "," + func.ShowSize((float)this.filesize));
                 this.statini.WriteString("encoder", "id", this.id);
                 this.statini.WriteString("encoder", "stat", "1");
                 this.statini.WriteString("encoder", "logfile", this.file_log);
@@ -231,10 +245,7 @@
             }
             else
             {
-                this.tmchk.Enabled = true;
-                this.AppendLog("转换队列为空");
-                this.statini.WriteString("encoder", "stat", "0");
-                this.statini.WriteString("encoder", "statmsg", "");
+                this.AppendLog("通过调用api为空");
             }
         }
 
@@ -376,18 +387,18 @@
             }
             //////失败通知.告知网站转码失败//////  
             try
-            {   
+            {
                 string filecode = this.fcode;
                 string status = "0";
                 WebClient client = new System.Net.WebClient();
                 string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode;
 
-               /* string filecode = this.fcode;
-                string status = "0";
-                WebClient client = new System.Net.WebClient();
-                string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode;
-                client.DownloadData(uri);
-                * */
+                /* string filecode = this.fcode;
+                 string status = "0";
+                 WebClient client = new System.Net.WebClient();
+                 string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode;
+                 client.DownloadData(uri);
+                 * */
             }
             catch (Exception ex)
             {
@@ -527,8 +538,8 @@
             {
                 str3 = this.file_ff;
             }
-            string str10 = string.Concat(new object[] { 
-                "-i \"", str5, "\" ", str4, " -y -async 1 -vsync 1 -acodec libfaac -ab ", this.e_aBit, "k -ac 2 ", str9, " -vcodec libx264 -x264opts keyint= ",this.e_FrameRate, str2, " -threads 0  -b ", this.e_vBit, "k -maxrate 5000k -bufsize 1 -g ", this.e_FrameRate, " -r ", this.e_FrameRate, 
+            string str10 = string.Concat(new object[] {
+                "-i \"", str5, "\" ", str4, " -y -async 1 -vsync 1 -acodec libfaac -ab ", this.e_aBit, "k -ac 2 ", str9, " -vcodec libx264 -x264opts keyint= ",this.e_FrameRate, str2, " -threads 0  -b ", this.e_vBit, "k -maxrate 5000k -bufsize 1 -g ", this.e_FrameRate, " -r ", this.e_FrameRate,
                 " ", str, "\"", str3, "\" "
              });
             this.p_encoder = new ProcessCaller(this.formobj);
@@ -584,7 +595,7 @@
                 info.Open(this.file_out);
                 int num4 = func.GetInt(info.Get(StreamKind.General, 0, "Duration").ToString()) / 0x3e8;
                 ProcessStartInfo startInfo = new ProcessStartInfo();
-                
+
                 if ((num4 > 0) && !this.m_isAudio)
                 {
                     int num5;
@@ -700,7 +711,7 @@
                     //处理文件成功在这里添加一个测试方法 看是否成功
                     string imgPath = this.imgdir + this.fcode + "_" + "3.jpg";
                     string bigimgpath = imgPath + "_b.jpg";
-                   // postFile(imgPath,bigimgpath);
+                    // postFile(imgPath,bigimgpath);
                 }
                 else
                 {
@@ -713,13 +724,20 @@
             try
             {
                 //上传七牛 - 上传前判断如果是mp4，需要过一遍qt-faststart.exe
-                if (this.outfiletype == "mp4")
+                Conn.ExecuteNonQuery("update ov_files set trancode=1 where id=" + this.id);
+                this.AppendLog("展示2：" + this.trancode.ToString());
+                this.statini.WriteString("encoder", "展示2：", this.id);
+
+                DataView defaultView = null;
+                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + this.id).Tables[0].DefaultView;
+                this.trancode = (int)defaultView[0]["trancode"];
+                if (this.outfiletype == "mp4" && this.trancode == 1)
                 {
                     this.statini.WriteString("encoder", "mp4streamconvert_begin", "开始调用qt-faststart流化MP4");
                     ProcessStartInfo startInfo = new ProcessStartInfo();
                     startInfo.FileName = Application.StartupPath + @"\qt-faststart.exe";
                     string dstMP4File = this.file_out.Replace(".mp4", "_dst.mp4");
-                    startInfo.Arguments = string.Concat(new object[] { this.file_out," ", dstMP4File }); 
+                    startInfo.Arguments = string.Concat(new object[] { this.file_out, " ", dstMP4File });
                     startInfo.CreateNoWindow = true;
                     startInfo.UseShellExecute = false;
                     Process.Start(startInfo).WaitForExit();
@@ -730,52 +748,64 @@
                     }
                     this.statini.WriteString("encoder", "mp4streamconvert_end", "结束调用qt-faststart流化MP4");
                 }
-                
-                string rnd=this.random();
-                string mp4Key = GetTimeStamp()+ "/" + rnd + ".mp4";
-                string filepath=this.file_out.Replace("////","\\").Replace("/","\\");
-                this.statini.WriteString("encoder", "qiniu1", "开始上传七牛：mp4Key="+ mp4Key + ",filepath=" + filepath);
-                Upoader up = new Upoader();
-                up.init();
-                string retstring = up.PutFile(mp4Key,filepath );
-                if (retstring == "")
-                {
-                    this.statini.WriteString("encoder", "qiniuret", "上传成功！mp4Key = " + mp4Key);
-                    //删除目标文件。已经上传成功，不需要保留了。
-                    System.IO.File.Delete(filepath);
-                }
-                else
-                {
-                    this.statini.WriteString("encoder", "qiniuret", "上传失败，返回字符串为："+ retstring);
-                }
-                this.statini.WriteString("encoder","qiniuret2","上传调用完成！返回字符串：" + retstring);
-                //回调
-                string filecode = this.fcode;
-                string status = "1";
-                WebClient client = new System.Net.WebClient();
-                string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
-                byte[] bt=client.DownloadData(uri);
-                this.statini.WriteString("encoder","uploadret","url=" + uri);
-                //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
-                //fs.Write(bt, 0, bt.Length);
-                //fs.Close();
-                //修改数据库的地址为七牛
+                Conn.ExecuteNonQuery("update ov_files set trancode=2 where id=" + this.id);
+                defaultView = null;
+                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + this.id).Tables[0].DefaultView;
+                this.trancode = (int)defaultView[0]["trancode"];
 
+                if (this.trancode == 2)
+                {
+                    this.AppendLog("展示3：" + this.trancode.ToString());
+                    this.statini.WriteString("encoder", "展示3：", this.id);
+
+                    string rnd = this.random();
+                    string mp4Key = GetTimeStamp() + "/" + rnd + ".mp4";
+                    string filepath = this.file_out.Replace("////", "\\").Replace("/", "\\");
+                    this.statini.WriteString("encoder", "qiniu1", "开始上传七牛：mp4Key=" + mp4Key + ",filepath=" + filepath);
+                    Upoader up = new Upoader();
+                    up.init();
+                    string retstring = up.PutFile(mp4Key, filepath);
+                    if (retstring == "")
+                    {
+                        this.statini.WriteString("encoder", "qiniuret", "上传成功！mp4Key = " + mp4Key);
+                        //删除目标文件。已经上传成功，不需要保留了。
+                        System.IO.File.Delete(filepath);
+                    }
+                    else
+                    {
+                        this.statini.WriteString("encoder", "qiniuret", "上传失败，返回字符串为：" + retstring);
+                    }
+                    this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
+                    //回调
+                    string filecode = this.fcode;
+                    string status = "1";
+                    WebClient client = new System.Net.WebClient();
+                    string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
+                    byte[] bt = client.DownloadData(uri);
+                    this.statini.WriteString("encoder", "uploadret", "url=" + uri);
+                    //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
+                    //fs.Write(bt, 0, bt.Length);
+                    //fs.Close();
+                    //修改数据库的地址为七牛
+
+                }
             }
             catch (Exception ex)
             {
                 this.statini.WriteString("encoder", "qiniuret3", "有异常，日志存入c:\\log.txt");
-                System.IO.FileStream fs=System.IO.File.Create("c:\\log.txt");
-                byte[] btarr=System.Text.Encoding.Default.GetBytes(ex.ToString());
+                System.IO.FileStream fs = System.IO.File.Create("c:\\log.txt");
+                byte[] btarr = System.Text.Encoding.Default.GetBytes(ex.ToString());
                 fs.Write(btarr, 0, btarr.Length);
                 fs.Close();
             }
+        
+             
         }
-        public  string GetTimeStamp()
+        public string GetTimeStamp()
         {
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return Convert.ToInt64(ts.TotalSeconds).ToString();
-        }  
+        }
 
         public string random()
         {
@@ -792,7 +822,7 @@
             return string.Join("", result);
         }
 
-        public void postFile(string imgpath,string bigimgpath) 
+        public void postFile(string imgpath, string bigimgpath)
         {
             try
             {
@@ -857,7 +887,7 @@
             sw.Close();
             fs.Close();
 
-        
+
         }
         public static void OnDebug(CURLINFOTYPE infoType, String msg,
             Object extraData)
@@ -1032,14 +1062,14 @@
                     this.statini.WriteInteger("encoder", "entime", @int);
                     break;
             }
-            ProcessCaller caller = (ProcessCaller) sender;
+            ProcessCaller caller = (ProcessCaller)sender;
             if (!caller.HasExited)
             {
-                TimeSpan span = (TimeSpan) (DateTime.Now - caller.StartTime);
-                this.statini.WriteInteger("encoder", "pruntime", (int) span.TotalSeconds);
+                TimeSpan span = (TimeSpan)(DateTime.Now - caller.StartTime);
+                this.statini.WriteInteger("encoder", "pruntime", (int)span.TotalSeconds);
                 try
                 {
-                    this.statini.WriteInteger("encoder", "cpu", (int) (((caller.TotalProcessorTime.TotalMilliseconds / span.TotalMilliseconds) / ((double) this.cpuCount)) * 100.0));
+                    this.statini.WriteInteger("encoder", "cpu", (int)(((caller.TotalProcessorTime.TotalMilliseconds / span.TotalMilliseconds) / ((double)this.cpuCount)) * 100.0));
                 }
                 catch
                 {
