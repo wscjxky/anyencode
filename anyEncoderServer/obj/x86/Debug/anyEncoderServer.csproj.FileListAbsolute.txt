@@ -61,3 +61,27 @@ C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Debug\QiniuHelper.pd
 C:\Users\root\Desktop\anyencode-master\anyEncoderServer\obj\x86\Debug\anyEncoderServer.exe.manifest
 C:\Users\root\Desktop\anyencode-master\anyEncoderServer\obj\x86\Debug\anyEncoderServer.application
 C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Debug\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Debug\anyEncoderServer.exe.config
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\obj\x86\Debug\anyEncoderServer.exe
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\obj\x86\Debug\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\anyEncoderServer.exe.config
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\anyEncoderServer.exe.manifest
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\anyEncoderServer.application
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\anyEncoderServer.exe
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\DevComponents.DotNetBar2.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\LibCurlNet.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\nunit.framework.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\nunit.util.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\office2pdf.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\Qiniu.4.0.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\QiniuHelper.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\Qiniu.2.0.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Debug\QiniuHelper.pdb
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Debug\anyEncoderServer.csprojResolveAssemblyReference.cache
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Debug\anyEncoderServer.exe.manifest
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Debug\anyEncoderServer.application
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Debug\anyEncoderServer.exe
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Debug\anyEncoderServer.pdb

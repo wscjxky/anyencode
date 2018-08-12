@@ -246,6 +246,9 @@
             else
             {
                 this.AppendLog("通过调用api为空");
+                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + "1214").Tables[0].DefaultView;
+                Conn.ExecuteNonQuery("update ov_files set count="+((int)defaultView[0]["count"]+1).ToString()+" where id=" + defaultView[0]["id"]);
+
             }
         }
 

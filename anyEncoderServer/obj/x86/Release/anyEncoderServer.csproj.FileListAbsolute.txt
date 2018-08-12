@@ -50,20 +50,44 @@ C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\anyEncoderSe
 C:\Users\root\Desktop\anyencode-master\anyEncoderServer\obj\x86\Release\anyEncoderServer.exe
 C:\Users\root\Desktop\anyencode-master\anyEncoderServer\obj\x86\Release\anyEncoderServer.pdb
 C:\Users\root\Desktop\anyencode-master\anyEncoderServer\obj\x86\Release\anyEncoderServer.csprojResolveAssemblyReference.cache
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\anyEncoderServer.exe.manifest
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\anyEncoderServer.application
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\anyEncoderServer.exe
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\DevComponents.DotNetBar2.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\ICSharpCode.SharpZipLib.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\LibCurlNet.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\Newtonsoft.Json.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\nunit.framework.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\nunit.util.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\office2pdf.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\Qiniu.4.0.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\QiniuHelper.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\Qiniu.2.0.dll
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\QiniuHelper.pdb
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\obj\x86\Release\anyEncoderServer.exe.manifest
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\obj\x86\Release\anyEncoderServer.application
-C:\Users\root\Desktop\anyencode-master\anyEncoderServer\bin\Release\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\anyEncoderServer.exe.config
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\obj\x86\Release\anyEncoderServer.exe
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\obj\x86\Release\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\anyEncoderServer.exe.manifest
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\anyEncoderServer.application
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\anyEncoderServer.exe
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\DevComponents.DotNetBar2.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\LibCurlNet.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\Newtonsoft.Json.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\nunit.framework.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\nunit.util.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\office2pdf.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\Qiniu.4.0.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\QiniuHelper.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\Qiniu.2.0.dll
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\bin\Release\QiniuHelper.pdb
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\obj\x86\Release\anyEncoderServer.csprojResolveAssemblyReference.cache
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\obj\x86\Release\anyEncoderServer.exe.manifest
+C:\Users\root\Desktop\anyencode-master - 副本\anyEncoderServer\obj\x86\Release\anyEncoderServer.application
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\anyEncoderServer.exe.config
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\anyEncoderServer.exe.manifest
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\anyEncoderServer.application
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\anyEncoderServer.exe
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\DevComponents.DotNetBar2.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\ICSharpCode.SharpZipLib.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\LibCurlNet.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\Newtonsoft.Json.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\nunit.framework.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\nunit.util.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\office2pdf.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\Qiniu.4.0.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\QiniuHelper.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\Qiniu.2.0.dll
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\bin\Release\QiniuHelper.pdb
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.exe.manifest
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.application
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.exe
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.pdb
