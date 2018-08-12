@@ -91,3 +91,4 @@ C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\
 C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.application
 C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.exe
 C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.pdb
+C:\Users\root\Desktop\anyencode-master - 最新的if版本\anyEncoderServer\obj\x86\Release\anyEncoderServer.csprojResolveAssemblyReference.cache

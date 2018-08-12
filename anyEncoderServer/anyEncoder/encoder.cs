@@ -168,6 +168,10 @@
             }
         }
 
+        public  void startlog(string log)
+        {
+            new IniFiles(Application.StartupPath + @"\stat2.ini").WriteString("system", "startlog", log);
+        }
         public void chkjob(object source, ElapsedEventArgs e)
         {
 
@@ -177,17 +181,23 @@
             this.errcount = 0;
             this.AppendLog("开始读取数据库");
 
-            
-            
+            this.startlog("开始读取数据库");
+
             try
             {
-                defaultView = Conn.GetDataSet("select top 1 * from ov_files where stat=0 and isdel=0 and filetype=0 and errcount<" + num + "order by id asc").Tables[0].DefaultView;
+                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=1214").Tables[0].DefaultView;
+                Conn.ExecuteNonQuery("update ov_files set count=" + ((int)defaultView[0]["count"] + 1).ToString() + " where id=1214");
+                defaultView = null;
 
+                defaultView = Conn.GetDataSet("select top 1 * from ov_files where stat=0 and isdel=0 and filetype=0 and errcount<" + num + "order by id asc").Tables[0].DefaultView;
+               
             }
             catch (Exception exception)
             {
                 this.tmchk.Enabled = true;
                 this.AppendLog(exception.Message.ToString());
+                this.startlog(exception.Message.ToString());
+
                 return;
             }
             if (defaultView.Count > 0)
@@ -219,6 +229,7 @@
 
                 this.trancode = (int)defaultView[0]["trancode"];
                 this.AppendLog("展示1：" + this.trancode.ToString());
+                this.startlog("展示1：" + this.trancode.ToString()+ strlogfilename);
 
 
                 if (func.Right(this.outfilename, 4) == ".mp4")
@@ -248,6 +259,7 @@
                 this.AppendLog("通过调用api为空");
                 defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + "1214").Tables[0].DefaultView;
                 Conn.ExecuteNonQuery("update ov_files set count="+((int)defaultView[0]["count"]+1).ToString()+" where id=" + defaultView[0]["id"]);
+                this.startlog("空：" + this.trancode.ToString() );
 
             }
         }
