@@ -185,9 +185,8 @@
 
             try
             {
-                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=1214").Tables[0].DefaultView;
-                Conn.ExecuteNonQuery("update ov_files set count=" + ((int)defaultView[0]["count"] + 1).ToString() + " where id=1214");
-                defaultView = null;
+                //defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=1214").Tables[0].DefaultView;
+                //Conn.ExecuteNonQuery("update ov_files set count=" + ((int)defaultView[0]["count"] + 1).ToString() + " where id=1214");
 
                 defaultView = Conn.GetDataSet("select top 1 * from ov_files where stat=0 and isdel=0 and filetype=0 and errcount<" + num + "order by id asc").Tables[0].DefaultView;
                
@@ -257,8 +256,6 @@
             else
             {
                 this.AppendLog("通过调用api为空");
-                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + "1214").Tables[0].DefaultView;
-                Conn.ExecuteNonQuery("update ov_files set count="+((int)defaultView[0]["count"]+1).ToString()+" where id=" + defaultView[0]["id"]);
                 this.startlog("空：" + this.trancode.ToString() );
 
             }
@@ -767,6 +764,7 @@
                 defaultView = null;
                 defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + this.id).Tables[0].DefaultView;
                 this.trancode = (int)defaultView[0]["trancode"];
+                this.AppendLog("yeyeyeyeye+" + this.id.ToString()+this.trancode.ToString());
 
                 if (this.trancode == 2)
                 {
@@ -802,7 +800,8 @@
                     //fs.Write(bt, 0, bt.Length);
                     //fs.Close();
                     //修改数据库的地址为七牛
-
+                    Conn.ExecuteNonQuery("update ov_files set trancode=3 where id=" + this.id);
+                    this.AppendLog("yeyeyeyeye+" + this.id.ToString());
                 }
             }
             catch (Exception ex)
