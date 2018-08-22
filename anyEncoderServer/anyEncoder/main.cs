@@ -8,6 +8,7 @@
     using System.IO;
     using System.Net;
     using System.Text;
+    using System.Threading;
     using System.Web;
     using System.Windows.Forms;
 
@@ -33,11 +34,14 @@
         private TextBox syslogbox;
         private TabStrip tabStrip1;
         private System.Windows.Forms.Timer timer_send;
+        public Mutex mut_main;
 
         public main()
         {
+       
             this.InitializeComponent();
             this.Text = this.Text + ", build " + System.IO.File.GetLastWriteTime(base.GetType().Assembly.Location).ToString();
+            mut_main = new Mutex();
         }
 
         private void AppendLog(string logstr)

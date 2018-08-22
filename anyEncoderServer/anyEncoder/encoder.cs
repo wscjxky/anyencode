@@ -16,6 +16,7 @@
     using Qiniu.RS;
     using System.Text;
     using System.Data.SqlClient;
+    using System.Threading;
 
     class Upoader
     {
@@ -99,6 +100,8 @@
         private System.Timers.Timer tmchk = new System.Timers.Timer(5000.0);
         private System.Timers.Timer tmchkdel = new System.Timers.Timer(2000.0);
         private string truedir;
+        private bool flag;
+
 
         public encoder(int tid)
         {
@@ -168,7 +171,7 @@
             }
         }
 
-        public  void startlog(string log)
+        public void startlog(string log)
         {
             new IniFiles(Application.StartupPath + @"\stat2.ini").WriteString("system", "startlog", log);
         }
@@ -179,71 +182,78 @@
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
-            this.AppendLog("开始读取数据库");
 
+            this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
-            try
+            bool bFind = false;
+
+            // 加锁
+            lock (this)
             {
-                //defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=1214").Tables[0].DefaultView;
-                //Conn.ExecuteNonQuery("update ov_files set count=" + ((int)defaultView[0]["count"] + 1).ToString() + " where id=1214");
-
-                defaultView = Conn.GetDataSet("select top 1 * from ov_files where stat=0 and isdel=0 and filetype=0 and errcount<" + num + "order by id asc").Tables[0].DefaultView;
-               
-            }
-            catch (Exception exception)
-            {
-                this.tmchk.Enabled = true;
-                this.AppendLog(exception.Message.ToString());
-                this.startlog(exception.Message.ToString());
-
-                return;
-            }
-            if (defaultView.Count > 0)
-            {
-                System.DateTime currentTime = new System.DateTime();
-                currentTime = System.DateTime.Now;
-                string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
-                this.statini = new IniFiles(string.Concat(new object[] { Application.StartupPath, @"\log\stat_", strlogfilename, ".ini" }));
-                this.id = defaultView[0]["id"].ToString();
-                this.weburl = defaultView[0]["webserver"].ToString();
-                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
-                this.errcount = (int)defaultView[0]["errcount"];
-                this.truedir = defaultView[0]["truedir"].ToString();
-                this.filesize = func.GetInt(defaultView[0]["filesize"].ToString());
-                this.addtime = this.truedir + defaultView[0]["truedir"].ToString();
-                this.file_in = defaultView[0]["truedir"].ToString() + @"tmpfiles\" + defaultView[0]["filename"].ToString();
-                if (!File.Exists(this.file_in))
-                {
-                    this.file_in = defaultView[0]["truedir"].ToString() + defaultView[0]["filedir"].ToString() + @"\" + defaultView[0]["filename"].ToString();
-                }
-                this.fname = defaultView[0]["filename"].ToString();
-                this.outfilename = defaultView[0]["outfilename"].ToString();
-                this.fcode = defaultView[0]["filecode"].ToString();
-                this.imgdir = this.truedir + defaultView[0]["filedir"].ToString() + @"\img\";
-                this.isrec = defaultView[0]["isrec"].ToString();
-                this.file_out = this.truedir + defaultView[0]["filedir"].ToString() + @"\" + this.outfilename;
-                this.file_swf = this.file_out.Replace(".flv", ".swf").Replace(".mp4", ".swf");
-                this.file_log = Application.StartupPath + @"\log\encoder_" + this.outfilename + ".log";
-
-                this.trancode = (int)defaultView[0]["trancode"];
-                this.AppendLog("展示1：" + this.trancode.ToString());
-                this.startlog("展示1：" + this.trancode.ToString()+ strlogfilename);
-
-
-                if (func.Right(this.outfilename, 4) == ".mp4")
-                {
-                    this.outfiletype = "mp4";
-                }
-                this.file_ff = this.file_in + ".ff.flv";
                 try
                 {
-                    if (!Directory.Exists(this.imgdir))
-                    {
-                        Directory.CreateDirectory(this.imgdir);
-                    }
+                    defaultView = Conn.GetDataSet("select top 1 * from ov_files where stat=0 and isdel=0 and filetype=0").Tables[0].DefaultView;
+                    //设置状态
+                    Conn.ExecuteNonQuery("update ov_files set stat=1 where id=" + defaultView[0]["id"]);
+
+                    bFind = true;
                 }
-                catch
+                catch (Exception exception)
+                {
+                    this.tmchk.Enabled = true;
+                    this.AppendLog(exception.Message.ToString());
+                    this.startlog(exception.Message.ToString()); 
+                }
+            }
+        
+            if(!bFind)
+            {
+                Thread.Sleep(5000);
+                return ;
+            }
+        
+            System.DateTime currentTime = new System.DateTime();
+            currentTime = System.DateTime.Now;
+            string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+            this.statini = new IniFiles(string.Concat(new object[] { Application.StartupPath, @"\log\stat_", strlogfilename, ".ini" }));
+            this.id = defaultView[0]["id"].ToString();
+            this.weburl = defaultView[0]["webserver"].ToString();
+            this.errcount = (int)defaultView[0]["errcount"];
+            this.truedir = defaultView[0]["truedir"].ToString();
+            this.filesize = func.GetInt(defaultView[0]["filesize"].ToString());
+            this.addtime = this.truedir + defaultView[0]["truedir"].ToString();
+            this.file_in = defaultView[0]["truedir"].ToString() + @"tmpfiles\" + defaultView[0]["filename"].ToString();
+            if (!File.Exists(this.file_in))
+            {
+                this.file_in = defaultView[0]["truedir"].ToString() + defaultView[0]["filedir"].ToString() + @"\" + defaultView[0]["filename"].ToString();
+            }
+            this.fname = defaultView[0]["filename"].ToString();
+            this.outfilename = defaultView[0]["outfilename"].ToString();
+            this.fcode = defaultView[0]["filecode"].ToString();
+            this.imgdir = this.truedir + defaultView[0]["filedir"].ToString() + @"\img\";
+            this.isrec = defaultView[0]["isrec"].ToString();
+            this.file_out = this.truedir + defaultView[0]["filedir"].ToString() + @"\" + this.outfilename;
+            this.file_swf = this.file_out.Replace(".flv", ".swf").Replace(".mp4", ".swf");
+            this.file_log = Application.StartupPath + @"\log\encoder_" + this.outfilename + ".log";
+
+            this.AppendLog("展示1：" + this.trancode.ToString());
+            this.startlog("展示1：" + this.trancode.ToString()+ strlogfilename);
+
+
+            if (func.Right(this.outfilename, 4) == ".mp4")
+            {
+                this.outfiletype = "mp4";
+            }
+            this.file_ff = this.file_in + ".ff.flv";
+            try
+            {
+                if (!Directory.Exists(this.imgdir))
+                {
+                    Directory.CreateDirectory(this.imgdir);
+                }
+            }
+            catch
                 {
                 }
                 this.AppendLog("开始处理文件：" + this.fname + "," + func.ShowSize((float)this.filesize));
@@ -252,13 +262,6 @@
                 this.statini.WriteString("encoder", "logfile", this.file_log);
                 this.statini.WriteString("encoder", "statmsg", "处理中");
                 this.run();
-            }
-            else
-            {
-                this.AppendLog("通过调用api为空");
-                this.startlog("空：" + this.trancode.ToString() );
-
-            }
         }
 
         public void chkjobdel(object source, ElapsedEventArgs e)
@@ -387,7 +390,6 @@
             else
             {
                 this.run_ffmpeg(null, null);
-                //this.run_transcode_plug(null, null);
             }
         }
 
@@ -736,13 +738,7 @@
             try
             {
                 //上传七牛 - 上传前判断如果是mp4，需要过一遍qt-faststart.exe
-                Conn.ExecuteNonQuery("update ov_files set trancode=1 where id=" + this.id);
-                this.AppendLog("展示2：" + this.trancode.ToString());
-                this.statini.WriteString("encoder", "展示2：", this.id);
 
-                DataView defaultView = null;
-                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + this.id).Tables[0].DefaultView;
-                this.trancode = (int)defaultView[0]["trancode"];
                 if (this.outfiletype == "mp4" && this.trancode == 1)
                 {
                     this.statini.WriteString("encoder", "mp4streamconvert_begin", "开始调用qt-faststart流化MP4");
@@ -760,14 +756,8 @@
                     }
                     this.statini.WriteString("encoder", "mp4streamconvert_end", "结束调用qt-faststart流化MP4");
                 }
-                Conn.ExecuteNonQuery("update ov_files set trancode=2 where id=" + this.id);
-                defaultView = null;
-                defaultView = Conn.GetDataSet("select top 1 * from ov_files where id=" + this.id).Tables[0].DefaultView;
-                this.trancode = (int)defaultView[0]["trancode"];
-                this.AppendLog("yeyeyeyeye+" + this.id.ToString()+this.trancode.ToString());
 
-                if (this.trancode == 2)
-                {
+                
                     this.AppendLog("展示3：" + this.trancode.ToString());
                     this.statini.WriteString("encoder", "展示3：", this.id);
 
@@ -800,9 +790,9 @@
                     //fs.Write(bt, 0, bt.Length);
                     //fs.Close();
                     //修改数据库的地址为七牛
-                    Conn.ExecuteNonQuery("update ov_files set trancode=3 where id=" + this.id);
+                    Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
                     this.AppendLog("yeyeyeyeye+" + this.id.ToString());
-                }
+                
             }
             catch (Exception ex)
             {

@@ -10,6 +10,7 @@
         public myService()
         {
             base.ServiceName = "anyEncoder";
+          
         }
 
         protected override void Dispose(bool disposing)
@@ -19,7 +20,6 @@
 
         protected override void OnStart(string[] args)
         {
-
             Thread thread = new Thread(new ThreadStart(this.StartListen));
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
