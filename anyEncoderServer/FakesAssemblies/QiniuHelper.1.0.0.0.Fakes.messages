@@ -1,0 +1,2 @@
+D:\zhh\转码模块\anyEncoderServer\Fakes\QiniuHelper.fakes : warning : 无法为 QiniuHelper.Upoader 生成存根: 类型对 exported or assembly(QiniuHelper.1.0.0.0.Fakes) 不可见。
+D:\zhh\转码模块\anyEncoderServer\Fakes\QiniuHelper.fakes : warning : 无法为 QiniuHelper.Upoader 生成填充码: 类型对 exported or assembly(QiniuHelper.1.0.0.0.Fakes) 不可见。
