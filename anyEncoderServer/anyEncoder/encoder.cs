@@ -181,6 +181,7 @@
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
+            
 
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
@@ -226,7 +227,8 @@
             this.file_in = defaultView[0]["truedir"].ToString() + @"tmpfiles\" + defaultView[0]["filename"].ToString();
             if (!File.Exists(this.file_in))
             {
-                this.file_in = defaultView[0]["truedir"].ToString() + defaultView[0]["filedir"].ToString() + @"\" + defaultView[0]["filename"].ToString();
+                //this.file_in = defaultView[0]["truedir"].ToString() + defaultView[0]["filedir"].ToString() + @"\" + defaultView[0]["filename"].ToString();
+                this.file_in = defaultView[0]["truedir"].ToString()+ defaultView[0]["filename"].ToString();
             }
             this.fname = defaultView[0]["filename"].ToString();
             this.outfilename = defaultView[0]["outfilename"].ToString();
