@@ -47,13 +47,14 @@
                     DataView defaultView = Conn.GetDataSet("select * from ov_files where stat=1 and isdel=0 and filetype=0").Tables[0].DefaultView;
                     if (defaultView.Table.Rows.Count>0)
                     {
+                        Conn.ExecuteNonQuery("update ov_files set stat=0  where stat=1 and isdel=0 and filetype=0");
+           
                         for (int i = 0; i < defaultView.Count; i++)
                         {
                             String path = defaultView[i]["truedir"].ToString() +  defaultView[i]["filedir"].ToString() + @"\" + defaultView[i]["outfilename"].ToString();
                             File.Delete(path);
                         }
 
-                        Conn.ExecuteNonQuery("update ov_files set stat=0  where stat=1 and isdel=0 and filetype=0");
                     }
                 }
                 catch

@@ -327,7 +327,7 @@
         {
             try
             {
-                Conn.ExecuteNonQuery("update ov_files set stat=0 where stat=2 and isdel=0");
+                //Conn.ExecuteNonQuery("update ov_files set stat=0 where stat=2 and isdel=0");
                 foreach (string str in Directory.GetFileSystemEntries(Application.StartupPath + @"\log"))
                 {
                     if ((func.Right(str, 4) == ".ini") || (func.Right(str, 4) == ".del"))

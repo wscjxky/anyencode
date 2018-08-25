@@ -100,8 +100,7 @@
         private System.Timers.Timer tmchk = new System.Timers.Timer(5000.0);
         private System.Timers.Timer tmchkdel = new System.Timers.Timer(2000.0);
         private string truedir;
-        private bool flag;
-
+        private Object theLock = new Object();
 
         public encoder(int tid)
         {
@@ -186,18 +185,23 @@
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
-            bool bFind = false;
-
             // 加锁
-            lock (this)
+            lock (theLock)
             {
                 try
                 {
                     defaultView = Conn.GetDataSet("select top 1 * from ov_files where stat=0 and isdel=0 and filetype=0").Tables[0].DefaultView;
-                    //设置状态
-                    Conn.ExecuteNonQuery("update ov_files set stat=1 where id=" + defaultView[0]["id"]);
-
-                    bFind = true;
+                    if (defaultView.Table.Rows.Count > 0)
+                    {
+                        //设置状态
+                        
+                        Conn.ExecuteNonQuery("update ov_files set stat=1 where id=" + defaultView[0]["id"]);
+                    }
+                    else
+                    {
+                        this.tmchk.Enabled = true;
+                        return;
+                    }
                 }
                 catch (Exception exception)
                 {
@@ -207,11 +211,7 @@
                 }
             }
         
-            if(!bFind)
-            {
-                Thread.Sleep(5000);
-                return ;
-            }
+        
         
             System.DateTime currentTime = new System.DateTime();
             currentTime = System.DateTime.Now;
