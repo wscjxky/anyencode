@@ -783,26 +783,30 @@ namespace anyEncoder
                     this.statini.WriteString("encoder", "qiniuret", "上传成功！mp4Key = " + mp4Key);
                     //删除目标文件。已经上传成功，不需要保留了。
                     System.IO.File.Delete(filepath);
+
+                    Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
+                    this.AppendLog("yeyeyeyeye+" + this.id.ToString());
+                    this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
+                    //回调
+                    string filecode = this.fcode;
+                    string status = "1";
+                    WebClient client = new System.Net.WebClient();
+                    string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
+                    byte[] bt = client.DownloadData(uri);
+                    this.statini.WriteString("encoder", "uploadret", "url=" + uri);
+                    //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
+                    //fs.Write(bt, 0, bt.Length);
+                    //fs.Close();
+                    //修改数据库的地址为七牛
+                    this.AppendLog("encoder" + "uploadret" + "url=" + uri);
+
                 }
                 else
                 {
                     this.statini.WriteString("encoder", "qiniuret", "上传失败，返回字符串为：" + retstring);
                 }
-                this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
-                //回调
-                string filecode = this.fcode;
-                string status = "1";
-                WebClient client = new System.Net.WebClient();
-                string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
-                byte[] bt = client.DownloadData(uri);
-                this.statini.WriteString("encoder", "uploadret", "url=" + uri);
-                //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
-                //fs.Write(bt, 0, bt.Length);
-                //fs.Close();
-                //修改数据库的地址为七牛
-                this.AppendLog("encoder"+ "uploadret"+"url=" + uri);
-                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
-                this.AppendLog("yeyeyeyeye+" + this.id.ToString());
+
+
 
             }
             catch (Exception ex)
