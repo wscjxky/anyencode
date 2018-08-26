@@ -96,7 +96,7 @@
             if (defaultView.Count > 0)
             {
                 this.id = defaultView[0]["id"].ToString();
-                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
+                Conn.ExecuteNonQuery("update ov_files set stat=3 where id=" + this.id);
                 this.errcount = (int) defaultView[0]["errcount"];
                 this.truedir = defaultView[0]["truedir"].ToString();
                 this.filesize = func.GetInt(defaultView[0]["filesize"].ToString());

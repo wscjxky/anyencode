@@ -800,6 +800,7 @@ namespace anyEncoder
                 //fs.Write(bt, 0, bt.Length);
                 //fs.Close();
                 //修改数据库的地址为七牛
+                this.AppendLog("encoder"+ "uploadret"+"url=" + uri);
                 Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
                 this.AppendLog("yeyeyeyeye+" + this.id.ToString());
 
