@@ -21,7 +21,7 @@
             get
             {
                 //return configini.ReadInteger("system", "maxtask", 1);
-                return 1;
+                return 2;
             }
         }
 
