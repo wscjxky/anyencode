@@ -22,8 +22,8 @@
             }
             else
             {
-                Run();
-                //ServiceBase.Run(new ServiceBase[] { new myService() });
+                //Run();
+                ServiceBase.Run(new ServiceBase[] { new myService() });
             }
         }
 
