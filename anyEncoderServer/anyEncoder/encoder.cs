@@ -181,7 +181,6 @@
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
-            
 
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
@@ -421,10 +420,8 @@
                 ////////    
             }
 
-
-
         }
-
+            
         private void run_ffmpeg(object sender, EventArgs e)
         {
             string str;
@@ -538,7 +535,7 @@
             {
                 //                str2 = " -deinterlace -subq 5 -me_method umh -me_range 16 -bf 0  -i_qfactor 1.4 -b_qfactor 1.3 -flags +loop -level 31 ";
                 //ljj@2016-5-27:去掉反隔行相关命令。提升画面清晰度。
-                str2 = " -bf 0  -i_qfactor 1.4 -b_qfactor 1.3 -flags +loop -level 31 ";
+                str2 = " -bf 0  -i_qfactor 1.4 -b_qfactor 1.3 -qmin 10 -qmax 51 -flags +loop -level 31 ";
             }
             else
             {
@@ -554,10 +551,19 @@
             {
                 str3 = this.file_ff;
             }
+            //string str10 = string.Concat(new object[] {
+            //    "-i \"", str5, "\" ", str4, " -y -async 1 -vsync 1 -acodec libfaac -ab ", this.e_aBit, "k -ac 2 ", str9, " -vcodec libx264 -x264opts keyint= ",this.e_FrameRate, str2, " -threads 0  -b ", this.e_vBit, "k -maxrate 5000k -bufsize 1 -g ", this.e_FrameRate, " -r ", this.e_FrameRate,
+            //    " ", str, "\"", str3, "\" "
+            // });
             string str10 = string.Concat(new object[] {
-                "-i \"", str5, "\" ", str4, " -y -async 1 -vsync 1 -acodec libfaac -ab ", this.e_aBit, "k -ac 2 ", str9, " -vcodec libx264 -x264opts keyint= ",this.e_FrameRate, str2, " -threads 0  -b ", this.e_vBit, "k -maxrate 5000k -bufsize 1 -g ", this.e_FrameRate, " -r ", this.e_FrameRate,
+                "-i \"", str5, "\" ", str4, " -y -async 1 -vsync 1 -acodec libfaac -ab ", this.e_aBit, "k -ac 2 ", str9, " -vcodec libx264 ", str2, " -threads 0  -b ", this.e_vBit, "k -maxrate 5000k -bufsize 1 -g ", this.e_FrameRate, " -r ", this.e_FrameRate,
                 " ", str, "\"", str3, "\" "
              });
+
+
+            //ffmpeg.exe -i "test.mp4" -y -async 1 -vsync 1 -acodec libfaac -ab 64k -ac 2 -s 640x360 -vcodec libx264  -bf 3 -i_qfactor 1.4 -b_qfactor 1.3 -coder 1 -refs 3 -qmin 10 -qmax 51 -sc_threshold 40 -trellis 1 -b 500k -maxrate 600k -bufsize 1 -g 30 -r 30  -vf "movie=0:png:D:/anyencode/anyEncoderServer/bin/Debug/images/logotext.png[wm];[in][wm] overlay=main_w-overlay_w-10:10:1 [out]"  "test_out.mp4"
+            //ffmpeg.exe -i "test.mp4" -y -async 1 -vsync 1 -acodec libfaac -ab 32k -ac 2 -s 640x360  -vcodec libx264  -bf 0  -i_qfactor 1.4 -b_qfactor 1.3 -qmin 10 -qmax 51 -flags +loop -level 31  -threads 0  -b 600k -maxrate 5000k -bufsize 1 -g 20 -r 20  -vf "movie=0:png:D:/anyencode/anyEncoderServer/bin/Debug/images/logotext.png[wm];[in][wm] overlay=main_w-overlay_w-10:10:1 [out]"  "test_out.mp4"
+            //D:\anyencode\anyEncoderServer\bin\Debug\ffmpeg\ffmpeg.exe -i "D:\\webtmpfiles\\25183409896.mp4"  -y -async 1 -vsync 1 -acodec libfaac -ab 32k -ac 2  -vcodec libx264  -bf 0  -i_qfactor 1.4 -b_qfactor 1.3 -qmin 10 -qmax 51 -flags +loop -level 31  -threads 0  -b 600k -maxrate 5000k -bufsize 1 -g 20 -r 20  -vf "movie=0:png:D:/anyencode/anyEncoderServer/bin/Debug/images/logotext.png [wm];[in][wm] overlay=main_w-overlay_w-10:10:1 [out]" "D:\\webtmpfiles\\/files/2018-08\oss2twld8uhcu5it.mp4" 
             this.p_encoder = new ProcessCaller(this.formobj);
             this.p_encoder.FileName = Application.StartupPath + @"\ffmpeg\ffmpeg.exe";
             this.p_encoder.Arguments = str10;
@@ -675,7 +681,7 @@
                 {
                     startInfo.FileName = Application.StartupPath + @"\swftools\swfrender.exe";
                     startInfo.Arguments = string.Concat(new object[] { "\"", this.file_in, "\" -X ", width, " -o \"", this.imgdir, this.fcode, "_1.jpg\"" });
-                    startInfo.CreateNoWindow = true;
+                    startInfo.CreateNoWindow =true;
                     startInfo.UseShellExecute = false;
                     this.AppendLog("开始截图：" + startInfo.FileName + " " + startInfo.Arguments);
                     this.statini.WriteString("encoder", "enmsg", "正在对swf截图:1");
