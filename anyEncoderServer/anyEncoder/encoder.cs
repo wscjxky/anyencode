@@ -183,6 +183,8 @@ namespace anyEncoder
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
+            uploadqiniut();
+            return;
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
@@ -612,12 +614,12 @@ namespace anyEncoder
                 //this.AppendLog("yeyeyeyeye+" + this.id.ToString());
                 //this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
                 //回调
-                string filecode = this.fcode;
+                string filecode = "2yoy9n8r9fo0wusb";
                 string status = "1";
                 WebClient client = new System.Net.WebClient();
                 string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
                 byte[] bt = client.DownloadData(uri);
-                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
+                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=1249");
 
                 //this.statini.WriteString("encoder", "uploadret", "url=" + uri);
                 //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
