@@ -602,7 +602,10 @@ namespace anyEncoder
             //this.AppendLog("开始上传七牛：mp4Key=" + mp4Key + ",filepath=" + filepath);
 
             Upoader up = new Upoader();
+            this.AppendLog("开始上传七牛");
+
             up.init();
+            this.AppendLog("开始上传七牛");
             string retstring = up.PutFile(mp4Key, "D:\\webtmpfiles\\files\\2018-08\\04ew9sl8wivn89zi_dst.mp4");
             if (retstring == "")
             {
