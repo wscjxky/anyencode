@@ -752,7 +752,7 @@ namespace anyEncoder
                     this.statini.WriteString("encoder", "mp4streamconvert_end", "结束调用qt-faststart流化MP4");
                 }
 
-
+          
                 this.AppendLog("展示3：" + this.trancode.ToString());
                 this.statini.WriteString("encoder", "展示3：", this.id);
 
