@@ -51,13 +51,11 @@ namespace anyEncoder
         }
         private static void extra_Notify(object sender, PutNotifyEvent e)
         {
-            e.BlkIdx.ToString();
-            e.BlkSize.ToString();
             System.DateTime currentTime = new System.DateTime();
-
+        
             string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
 
-            new IniFiles(Application.StartupPath + @"\"+strlogfilename+"B.ini").WriteString("system", "startlog", e.BlkIdx.ToString() + e.BlkSize.ToString());
+            new IniFiles(Application.StartupPath + @"\"+strlogfilename+"SUCCESS.ini").WriteString("system", "startlog", e.BlkIdx.ToString()+"----" + e.BlkSize.ToString());
             
             Console.WriteLine();
             //  e.Ret.offset.ToString();
@@ -68,13 +66,12 @@ namespace anyEncoder
 
         private static void extra_NotifyErr(object sender, PutNotifyErrorEvent e)
         {
-            e.BlkIdx.ToString();
-            e.BlkSize.ToString();
+
             System.DateTime currentTime = new System.DateTime();
 
             string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
 
-            new IniFiles(Application.StartupPath + @"\" + strlogfilename + "A.ini").WriteString("system", "startlog", e.BlkIdx.ToString() + e.BlkSize.ToString());
+            new IniFiles(Application.StartupPath + @"\" + strlogfilename + "ERROR.ini").WriteString("system", "startlog", e.BlkIdx.ToString() + e.BlkSize.ToString());
 
         }
         public string PutFile(string key, string fname)
@@ -84,14 +81,13 @@ namespace anyEncoder
             string upToken = policy.Token();
             //PutExtra extra = new PutExtra();
             //IOClient client = new IOClient();
+            //PutRet ret = client.PutFile(upToken, key, fname, extra);
             Settings setting = new Settings();
             ResumablePutExtra extra = new ResumablePutExtra();
-
             extra.Notify += new EventHandler<PutNotifyEvent>(extra_Notify);
             extra.NotifyErr += new EventHandler<PutNotifyErrorEvent>(extra_NotifyErr);
                         ResumablePut client = new ResumablePut(setting, extra);
 
-            //PutRet ret = client.PutFile(upToken, key, fname, extra);
             CallRet ret = client.PutFile(upToken, fname, key);
             if (!ret.OK)
             {
@@ -231,8 +227,7 @@ namespace anyEncoder
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
-            uploadqiniut();
-            return;
+     
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
