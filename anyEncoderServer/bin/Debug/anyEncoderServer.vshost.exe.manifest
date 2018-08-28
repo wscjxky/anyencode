@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="anyEncoderServer.exe" size="92600">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="anyEncoderServer.exe" size="93624">
       <assemblyIdentity name="anyEncoderServer" version="0.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7BfzdHtHF/V8TkKEq1Msv/ybTSA=</dsig:DigestValue>
+        <dsig:DigestValue>SUOnZEGVUoUw1eWOWz28u1IiPtQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

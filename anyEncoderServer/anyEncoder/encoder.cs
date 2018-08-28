@@ -19,6 +19,8 @@ namespace anyEncoder
     using System.Text;
     using System.Data.SqlClient;
     using System.Threading;
+    using Qiniu.IO.Resumable;
+    using Qiniu.RPC;
 
     class Upoader
     {
@@ -27,6 +29,8 @@ namespace anyEncoder
         //[[ljj@2016-10-11: 增加切片处理指令
         private string _fops;
         private string pipeline;
+        public TextBox logbox;
+
         //]]
         public void init()
         {
@@ -37,14 +41,58 @@ namespace anyEncoder
 
 
         }
+        private void AppendLog(string logstr)
+        {
+            if (this.logbox.Lines.Length > 0xfa0)
+            {
+                this.logbox.Clear();
+            }
+            this.logbox.AppendText(DateTime.Now.ToString() + " : " + logstr + Environment.NewLine);
+        }
+        private static void extra_Notify(object sender, PutNotifyEvent e)
+        {
+            e.BlkIdx.ToString();
+            e.BlkSize.ToString();
+            System.DateTime currentTime = new System.DateTime();
+
+            string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+
+            new IniFiles(Application.StartupPath + @"\"+strlogfilename+"A.ini").WriteString("system", "startlog", e.BlkIdx.ToString() + e.BlkSize.ToString());
+            
+            Console.WriteLine();
+            //  e.Ret.offset.ToString();
+            //2015年三月23日，提交了
+
+
+        }
+
+        private static void extra_NotifyErr(object sender, PutNotifyErrorEvent e)
+        {
+            e.BlkIdx.ToString();
+            e.BlkSize.ToString();
+            System.DateTime currentTime = new System.DateTime();
+
+            string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
+
+            new IniFiles(Application.StartupPath + @"\" + strlogfilename + "A.ini").WriteString("system", "startlog", e.BlkIdx.ToString() + e.BlkSize.ToString());
+
+        }
         public string PutFile(string key, string fname)
         {
             _putfileRet = "";
             var policy = new PutPolicy(_bucket,7200);
             string upToken = policy.Token();
-            PutExtra extra = new PutExtra();
-            IOClient client = new IOClient();
-            PutRet ret = client.PutFile(upToken, key, fname, extra);
+            //PutExtra extra = new PutExtra();
+            //IOClient client = new IOClient();
+            Settings setting = new Settings();
+            ResumablePutExtra extra = new ResumablePutExtra();
+
+            extra.Notify += new EventHandler<PutNotifyEvent>(extra_Notify);
+            extra.NotifyErr += new EventHandler<PutNotifyErrorEvent>(extra_NotifyErr);
+                        ResumablePut client = new ResumablePut(setting, extra);
+
+            //PutRet ret = client.PutFile(upToken, key, fname, extra);
+            CallRet ret = client.PutFile(upToken, fname, key);
             if (!ret.OK)
             {
                 _putfileRet = string.Format("fsizelimit={0},deadline={1},{2},{3},{4}", policy.FsizeLimit, policy.Deadline,policy.CallBackBody,policy.ReturnBody) + ret.Response + "***exception:" + ret.Exception.ToString();
