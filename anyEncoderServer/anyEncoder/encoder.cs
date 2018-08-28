@@ -731,9 +731,12 @@ namespace anyEncoder
             try
             {
                 //上传七牛 - 上传前判断如果是mp4，需要过一遍qt-faststart.exe
+                this.AppendLog("filetype：" + this.outfiletype);
 
                 if (this.outfiletype == "mp4")
                 {
+                    this.AppendLog("开始调用qt-faststart流化MP4");
+
                     this.statini.WriteString("encoder", "mp4streamconvert_begin", "开始调用qt-faststart流化MP4");
                     ProcessStartInfo startInfo = new ProcessStartInfo();
                     startInfo.FileName = Application.StartupPath + @"\qt-faststart.exe";
@@ -747,6 +750,8 @@ namespace anyEncoder
                         System.IO.File.Delete(this.file_out); //删除原文件
                         this.file_out = dstMP4File;
                     }
+                    this.AppendLog("结束调用qt-faststart流化MP4");
+
                     this.statini.WriteString("encoder", "mp4streamconvert_end", "结束调用qt-faststart流化MP4");
                 }
 
@@ -758,6 +763,8 @@ namespace anyEncoder
                 string mp4Key = GetTimeStamp() + "/" + rnd + ".mp4";
                 string filepath = this.file_out.Replace("////", "\\").Replace("/", "\\");
                 this.statini.WriteString("encoder", "qiniu1", "开始上传七牛：mp4Key=" + mp4Key + ",filepath=" + filepath);
+                this.AppendLog("开始上传七牛：mp4Key=" + mp4Key + ",filepath=" + filepath);
+
                 Upoader up = new Upoader();
                 up.init();
                 string retstring = up.PutFile(mp4Key, filepath);
@@ -787,6 +794,8 @@ namespace anyEncoder
                 else
                 {
                     this.statini.WriteString("encoder", "qiniuret", "上传失败，返回字符串为：" + retstring);
+                    this.AppendLog("上传失败，返回字符串为：" + retstring);
+
                 }
 
 
