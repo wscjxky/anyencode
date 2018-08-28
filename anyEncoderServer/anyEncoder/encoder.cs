@@ -1058,6 +1058,7 @@ namespace anyEncoder
                     {
                         @int = 0xf423f;
                     }
+                    this.AppendLog(text);
                     this.statini.WriteInteger("encoder", "entime", @int);
                     break;
 
