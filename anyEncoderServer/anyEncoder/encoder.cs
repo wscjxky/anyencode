@@ -719,17 +719,7 @@ namespace anyEncoder
                     {
                         this.statini.WriteString("encoder", "delfile_log", "删除文件失败:" + this.file_log);
                     }
-                    try
-                    {
-                        if (this.configini.ReadBool("encoder", "autodel", false))
-                        {
-                            File.Delete(this.file_in);
-                        }
-                    }
-                    catch
-                    {
-                        this.statini.WriteString("encoder", "delfile_in", "删除文件失败:" + this.file_in);
-                    }
+                    
                     this.statini.WriteString("encoder", "enmsg", "处理文件成功");
                     this.AppendLog("处理文件成功：" + this.file_in);
                     //处理文件成功在这里添加一个测试方法 看是否成功
