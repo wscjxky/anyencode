@@ -40,7 +40,7 @@ namespace anyEncoder
         public string PutFile(string key, string fname)
         {
             _putfileRet = "";
-            var policy = new PutPolicy(_bucket, 28800);
+            var policy = new PutPolicy(_bucket,17200);
             string upToken = policy.Token();
             PutExtra extra = new PutExtra();
             IOClient client = new IOClient();
