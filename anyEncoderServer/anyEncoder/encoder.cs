@@ -57,7 +57,7 @@ namespace anyEncoder
 
             string strlogfilename = string.Format("{0}{1}{2}_{3}{4}{5}", currentTime.Year, currentTime.Month, currentTime.Day, currentTime.Hour, currentTime.Minute, currentTime.Second);
 
-            new IniFiles(Application.StartupPath + @"\"+strlogfilename+"A.ini").WriteString("system", "startlog", e.BlkIdx.ToString() + e.BlkSize.ToString());
+            new IniFiles(Application.StartupPath + @"\"+strlogfilename+"B.ini").WriteString("system", "startlog", e.BlkIdx.ToString() + e.BlkSize.ToString());
             
             Console.WriteLine();
             //  e.Ret.offset.ToString();
