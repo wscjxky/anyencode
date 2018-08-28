@@ -20,8 +20,8 @@
         {
             get
             {
-                //return configini.ReadInteger("system", "maxtask", 1);
-                return 2;
+                return configini.ReadInteger("system", "maxtask", 1);
+                
             }
         }
 
