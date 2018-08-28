@@ -40,14 +40,14 @@ namespace anyEncoder
         public string PutFile(string key, string fname)
         {
             _putfileRet = "";
-            var policy = new PutPolicy(_bucket,17200);
+            var policy = new PutPolicy(_bucket,7200);
             string upToken = policy.Token();
             PutExtra extra = new PutExtra();
             IOClient client = new IOClient();
             PutRet ret = client.PutFile(upToken, key, fname, extra);
             if (!ret.OK)
             {
-                _putfileRet = string.Format("fsizelimit={0},deadline={1}", policy.FsizeLimit, policy.Deadline) + ret.Response + "***exception:" + ret.Exception.ToString();
+                _putfileRet = string.Format("fsizelimit={0},deadline={1},{2},{3},{4}", policy.FsizeLimit, policy.Deadline,policy.CallBackBody,policy.ReturnBody) + ret.Response + "***exception:" + ret.Exception.ToString();
             }
             return _putfileRet;
         }
