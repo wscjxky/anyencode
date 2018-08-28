@@ -579,6 +579,7 @@ namespace anyEncoder
                 }
                 else
                 {
+
                     this.p_encoder.Completed += new EventHandler(this.run_getimg);
                 }
             }
@@ -599,15 +600,10 @@ namespace anyEncoder
         {
             if (!File.Exists(this.file_out))
             {
-                if (string.Compare(this.runtype, "ffmpeg", true) == 0)
-                {
-                    this.AppendLog("无文件退出,错误+1，尝试使用额外插件转码");
-                    run_transcode_plug(null, null);
-                    return;
-                }
                 this.AppendLog("无文件退出,错误+1");
-                Conn.ExecuteNonQuery("update ov_files set stat=0,errcount=errcount+1 where id=" + this.id);
+                Conn.ExecuteNonQuery("update ov_files set stat=0 where id=" + this.id);
                 this.run_Canceled(null, null);
+
             }
             else
             {
@@ -619,7 +615,6 @@ namespace anyEncoder
                 info.Open(this.file_out);
                 int num4 = func.GetInt(info.Get(StreamKind.General, 0, "Duration").ToString()) / 0x3e8;
                 ProcessStartInfo startInfo = new ProcessStartInfo();
-
                 if ((num4 > 0) && !this.m_isAudio)
                 {
                     int num5;
@@ -731,7 +726,7 @@ namespace anyEncoder
                 {
                     this.statini.WriteString("encoder", "enmsg", "处理文件失败");
                     this.AppendLog("处理文件错误,错误+1：" + this.file_in);
-                    Conn.ExecuteNonQuery("update ov_files set stat=0,errcount=errcount+1 where id=" + this.id);
+                    Conn.ExecuteNonQuery("update ov_files set stat=0 where id=" + this.id);
                 }
                 this.tmchk.Enabled = true;
             }
@@ -739,7 +734,7 @@ namespace anyEncoder
             {
                 //上传七牛 - 上传前判断如果是mp4，需要过一遍qt-faststart.exe
 
-                if (this.outfiletype == "mp4" && this.trancode == 1)
+                if (this.outfiletype == "mp4")
                 {
                     this.statini.WriteString("encoder", "mp4streamconvert_begin", "开始调用qt-faststart流化MP4");
                     ProcessStartInfo startInfo = new ProcessStartInfo();
