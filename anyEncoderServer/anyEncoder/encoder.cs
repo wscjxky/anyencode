@@ -564,8 +564,6 @@ namespace anyEncoder
 
 
             //ffmpeg.exe -i "test.mp4" -y -async 1 -vsync 1 -acodec libfaac -ab 64k -ac 2 -s 640x360 -vcodec libx264  -bf 3 -i_qfactor 1.4 -b_qfactor 1.3 -coder 1 -refs 3 -qmin 10 -qmax 51 -sc_threshold 40 -trellis 1 -b 500k -maxrate 600k -bufsize 1 -g 30 -r 30  -vf "movie=0:png:D:/anyencode/anyEncoderServer/bin/Debug/images/logotext.png[wm];[in][wm] overlay=main_w-overlay_w-10:10:1 [out]"  "test_out.mp4"
-            //ffmpeg.exe -i "test.mp4" -y -async 1 -vsync 1 -acodec libfaac -ab 32k -ac 2 -s 640x360  -vcodec libx264  -bf 0  -i_qfactor 1.4 -b_qfactor 1.3 -qmin 10 -qmax 51 -flags +loop -level 31  -threads 0  -b 600k -maxrate 5000k -bufsize 1 -g 20 -r 20  -vf "movie=0:png:D:/anyencode/anyEncoderServer/bin/Debug/images/logotext.png[wm];[in][wm] overlay=main_w-overlay_w-10:10:1 [out]"  "test_out.mp4"
-            //D:\anyencode\anyEncoderServer\bin\Debug\ffmpeg\ffmpeg.exe -i "D:\\webtmpfiles\\25183409896.mp4"  -y -async 1 -vsync 1 -acodec libfaac -ab 32k -ac 2  -vcodec libx264  -bf 0  -i_qfactor 1.4 -b_qfactor 1.3 -qmin 10 -qmax 51 -flags +loop -level 31  -threads 0  -b 600k -maxrate 5000k -bufsize 1 -g 20 -r 20  -vf "movie=0:png:D:/anyencode/anyEncoderServer/bin/Debug/images/logotext.png [wm];[in][wm] overlay=main_w-overlay_w-10:10:1 [out]" "D:\\webtmpfiles\\/files/2018-08\oss2twld8uhcu5it.mp4" 
             this.p_encoder = new ProcessCaller(this.formobj);
             this.p_encoder.FileName = Application.StartupPath + @"\ffmpeg\ffmpeg.exe";
             this.p_encoder.Arguments = str10;
@@ -768,8 +766,6 @@ namespace anyEncoder
                     this.statini.WriteString("encoder", "qiniuret", "上传成功！mp4Key = " + mp4Key);
                     //删除目标文件。已经上传成功，不需要保留了。
                     System.IO.File.Delete(filepath);
-
-                    Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
                     this.AppendLog("yeyeyeyeye+" + this.id.ToString());
                     this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
                     //回调
@@ -778,6 +774,8 @@ namespace anyEncoder
                     WebClient client = new System.Net.WebClient();
                     string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
                     byte[] bt = client.DownloadData(uri);
+                    Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
+
                     this.statini.WriteString("encoder", "uploadret", "url=" + uri);
                     //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
                     //fs.Write(bt, 0, bt.Length);
