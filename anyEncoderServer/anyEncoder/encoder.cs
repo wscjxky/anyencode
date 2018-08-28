@@ -183,8 +183,6 @@ namespace anyEncoder
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
-            uploadqiniut();
-            return;
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
@@ -598,7 +596,7 @@ namespace anyEncoder
         {
             string rnd = this.random();
             string mp4Key = GetTimeStamp() + "/" + rnd + ".mp4";
-            this.statini.WriteString("encoder", "qiniu1", "开始上传七牛：mp4Key=" + "1535444433/16152214132012111710.mp4" + ",filepath=" + "D:\\webtmpfiles\\\files\\2018-08\\04ew9sl8wivn89zi_dst.mp4");
+            //this.statini.WriteString("encoder", "qiniu1", "开始上传七牛：mp4Key=" + "1535444433/16152214132012111710.mp4" + ",filepath=" + "D:\\04ew9sl8wivn89zi_dst.mp4");
             //this.AppendLog("开始上传七牛：mp4Key=" + mp4Key + ",filepath=" + filepath);
 
             Upoader up = new Upoader();
@@ -606,14 +604,13 @@ namespace anyEncoder
 
             up.init();
             this.AppendLog("开始上传七牛");
-            string retstring = up.PutFile(mp4Key, "D:\\webtmpfiles\\files\\2018-08\\04ew9sl8wivn89zi_dst.mp4");
+            string retstring = up.PutFile(mp4Key, "D:\\04ew9sl8wivn89zi_dst.mp4");
             if (retstring == "")
             {
-                this.statini.WriteString("encoder", "qiniuret", "上传成功！mp4Key = " + mp4Key);
                 //删除目标文件。已经上传成功，不需要保留了。
                 //System.IO.File.Delete(filepath);
-                this.AppendLog("yeyeyeyeye+" + this.id.ToString());
-                this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
+                //this.AppendLog("yeyeyeyeye+" + this.id.ToString());
+                //this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
                 //回调
                 string filecode = this.fcode;
                 string status = "1";
@@ -622,7 +619,7 @@ namespace anyEncoder
                 byte[] bt = client.DownloadData(uri);
                 Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
 
-                this.statini.WriteString("encoder", "uploadret", "url=" + uri);
+                //this.statini.WriteString("encoder", "uploadret", "url=" + uri);
                 //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
                 //fs.Write(bt, 0, bt.Length);
                 //fs.Close();
@@ -632,7 +629,7 @@ namespace anyEncoder
             }
             else
             {
-                this.statini.WriteString("encoder", "qiniuret", "上传失败，返回字符串为：" + retstring);
+                //this.statini.WriteString("encoder", "qiniuret", "上传失败，返回字符串为：" + retstring);
                 this.AppendLog("上传失败，返回字符串为：" + retstring);
 
             }
