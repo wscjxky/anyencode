@@ -886,6 +886,7 @@ namespace anyEncoder
                     this.AppendLog("yeyeyeyeye+" + this.id.ToString());
                     this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
                     //回调
+
                     string filecode = this.fcode;
                     string status = "1";
                     WebClient client = new System.Net.WebClient();
@@ -1169,6 +1170,8 @@ namespace anyEncoder
                         @int = 0xf423f;
                     }
                     this.AppendLog(text);
+                    this.statini.WriteString("encoder", "speed", text);
+
                     this.statini.WriteInteger("encoder", "entime", @int);
                     break;
 
