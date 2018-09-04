@@ -202,7 +202,30 @@ namespace anyEncoder
             }
             this.logbox.AppendText(DateTime.Now.ToString() + " : " + logstr + Environment.NewLine);
         }
+        public void check_out()
+        {
+            try
+            {
+                //0初始状态，1待处理，2已提交七牛云
+                DataView defaultView = Conn.GetDataSet("select * from ov_files where stat=1 and isdel=0 and filetype=0").Tables[0].DefaultView;
+                if (defaultView.Table.Rows.Count > 0)
+                {
+                    Conn.ExecuteNonQuery("update ov_files set stat=0  where stat=1 and isdel=0 and filetype=0");
 
+                    for (int i = 0; i < defaultView.Count; i++)
+                    {
+                        String path = defaultView[i]["truedir"].ToString() + defaultView[i]["filedir"].ToString() + @"\" + defaultView[i]["outfilename"].ToString();
+                        File.Delete(path);
+                    }
+
+                }
+                return;
+            }
+            catch
+            {
+                return;
+            }
+        }
         public void cancel()
         {
             try
@@ -227,7 +250,7 @@ namespace anyEncoder
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
-     
+            check_out();
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
@@ -254,6 +277,7 @@ namespace anyEncoder
                     this.tmchk.Enabled = true;
                     this.AppendLog(exception.Message.ToString());
                     this.startlog(exception.Message.ToString());
+                    return;
                 }
             }
 
