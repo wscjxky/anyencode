@@ -250,6 +250,7 @@ namespace anyEncoder
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
+            Thread.Sleep(10000);
             check_out();
             Thread.Sleep(10000);
             this.AppendLog("开始读取数据库");
@@ -798,7 +799,7 @@ namespace anyEncoder
                 {
                     FileInfo info3 = new FileInfo(this.file_out);
                     long length = info3.Length;
-                    Conn.ExecuteNonQuery(string.Concat(new object[] { "update ov_files set stat=1,sendok=0,times=", num4, ",flvsize=", length, ",autoimg='", str, "' where id=", this.id }));
+                    Conn.ExecuteNonQuery(string.Concat(new object[] { "update ov_files set sendok=0,times=", num4, ",flvsize=", length, ",autoimg='", str, "' where id=", this.id }));
                     try
                     {
                         File.Delete(this.file_ff);
@@ -884,7 +885,7 @@ namespace anyEncoder
                     this.statini.WriteString("encoder", "qiniuret", "上传成功！mp4Key = " + mp4Key);
                     //删除目标文件。已经上传成功，不需要保留了。
                     System.IO.File.Delete(filepath);
-                    this.AppendLog("yeyeyeyeye+" + this.id.ToString());
+                    this.AppendLog("yeyeyeyeye" + this.id.ToString());
                     this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
                     //回调
 
@@ -901,7 +902,6 @@ namespace anyEncoder
                     //fs.Close();
                     //修改数据库的地址为七牛
                     this.AppendLog("encoder" + "uploadret" + "url=" + uri);
-                    Thread.Sleep(5000);
 
 
                 }
@@ -911,8 +911,7 @@ namespace anyEncoder
                     this.AppendLog("上传失败，返回字符串为：" + retstring);
 
                 }
-
-
+                Thread.Sleep(5000);
 
             }
             catch (Exception ex)
