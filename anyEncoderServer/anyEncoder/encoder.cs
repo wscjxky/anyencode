@@ -251,6 +251,7 @@ namespace anyEncoder
             DataView defaultView = null;
             this.errcount = 0;
             check_out();
+            Thread.Sleep(10000);
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
@@ -900,6 +901,8 @@ namespace anyEncoder
                     //fs.Close();
                     //修改数据库的地址为七牛
                     this.AppendLog("encoder" + "uploadret" + "url=" + uri);
+                    Thread.Sleep(5000);
+
 
                 }
                 else
