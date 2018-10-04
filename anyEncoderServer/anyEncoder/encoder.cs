@@ -202,30 +202,6 @@ namespace anyEncoder
             }
             this.logbox.AppendText(DateTime.Now.ToString() + " : " + logstr + Environment.NewLine);
         }
-        public void check_out()
-        {
-            try
-            {
-                //0初始状态，1待处理，2已提交七牛云
-                DataView defaultView = Conn.GetDataSet("select * from ov_files where stat=1 and isdel=0 and filetype=0").Tables[0].DefaultView;
-                if (defaultView.Table.Rows.Count > 0)
-                {
-                    Conn.ExecuteNonQuery("update ov_files set stat=0  where stat=1 and isdel=0 and filetype=0");
-
-                    for (int i = 0; i < defaultView.Count; i++)
-                    {
-                        String path = defaultView[i]["truedir"].ToString() + defaultView[i]["filedir"].ToString() + @"\" + defaultView[i]["outfilename"].ToString();
-                        File.Delete(path);
-                    }
-
-                }
-                return;
-            }
-            catch
-            {
-                return;
-            }
-        }
         public void cancel()
         {
             try
@@ -239,20 +215,48 @@ namespace anyEncoder
             }
         }
 
+        public void check_uploader()
+        {
+            string rnd = this.random();
+            string mp4Key = GetTimeStamp() + "/" + rnd + ".mp4";
+            string filepath = "H:/手机备份/手机/图片/VID_20170407_171319.mp4";
+
+            Upoader up = new Upoader();
+            up.init();
+            string retstring = up.PutFile(mp4Key, filepath);
+            if (retstring == "")
+            {
+                //删除目标文件。已经上传成功，不需要保留了。
+                //回调
+
+                string filecode = this.fcode;
+                string status = "1";
+                WebClient client = new System.Net.WebClient();
+                string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://cdn.jianpianzi.com/" + mp4Key;
+                byte[] bt = client.DownloadData(uri);
+                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
+
+                this.statini.WriteString("encoder", "uploadret", "url=" + uri);
+                //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
+                //fs.Write(bt, 0, bt.Length);
+                //fs.Close();
+                //修改数据库的地址为七牛
+                this.AppendLog("encoder" + "uploadret" + "url=" + uri);
+
+
+            }
+        }
+
         public void startlog(string log)
         {
             new IniFiles(Application.StartupPath + @"\stat2.ini").WriteString("system", "startlog", log);
         }
         public void chkjob(object source, ElapsedEventArgs e)
         {
-
             this.tmchk.Enabled = false;
             int num = this.configini.ReadInteger("encoder", "maxerr", 3);
             DataView defaultView = null;
             this.errcount = 0;
-            Thread.Sleep(10000);
-            check_out();
-            Thread.Sleep(10000);
             this.AppendLog("开始读取数据库");
             this.startlog("开始读取数据库");
 
@@ -663,49 +667,6 @@ namespace anyEncoder
             this.runtype = "ffmpeg";
             this.p_encoder.Start();
         }
-        private void uploadqiniut()
-        {
-            string rnd = this.random();
-            string mp4Key = GetTimeStamp() + "/" + rnd + ".mp4";
-            //this.statini.WriteString("encoder", "qiniu1", "开始上传七牛：mp4Key=" + "1535444433/16152214132012111710.mp4" + ",filepath=" + "D:\\04ew9sl8wivn89zi_dst.mp4");
-            //this.AppendLog("开始上传七牛：mp4Key=" + mp4Key + ",filepath=" + filepath);
-
-            Upoader up = new Upoader();
-            this.AppendLog("开始上传七牛");
-
-            up.init();
-            this.AppendLog("开始上传七牛");
-            string retstring = up.PutFile(mp4Key, "D:\\04ew9sl8wivn89zi_dst.mp4");
-            if (retstring == "")
-            {
-                //删除目标文件。已经上传成功，不需要保留了。
-                //System.IO.File.Delete(filepath);
-                //this.AppendLog("yeyeyeyeye+" + this.id.ToString());
-                //this.statini.WriteString("encoder", "qiniuret2", "上传调用完成！返回字符串：" + retstring);
-                //回调
-                string filecode = "2yoy9n8r9fo0wusb";
-                string status = "1";
-                WebClient client = new System.Net.WebClient();
-                string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
-                byte[] bt = client.DownloadData(uri);
-                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=1249");
-
-                //this.statini.WriteString("encoder", "uploadret", "url=" + uri);
-                //System.IO.FileStream fs = System.IO.File.Create("c:\\encoderupload.txt");
-                //fs.Write(bt, 0, bt.Length);
-                //fs.Close();
-                //修改数据库的地址为七牛
-                this.AppendLog("encoder" + "uploadret" + "url=" + uri);
-
-            }
-            else
-            {
-                //this.statini.WriteString("encoder", "qiniuret", "上传失败，返回字符串为：" + retstring);
-                this.AppendLog("上传失败，返回字符串为：" + retstring);
-
-            }
-
-        }
         private void run_getimg(object sender, EventArgs e)
         {
             if (!File.Exists(this.file_out))
@@ -892,7 +853,7 @@ namespace anyEncoder
                     string filecode = this.fcode;
                     string status = "1";
                     WebClient client = new System.Net.WebClient();
-                    string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://7xl6yy.com1.z0.glb.clouddn.com/" + mp4Key;
+                    string uri = "http://www.jianpianzi.com/cloud/transcodeStatus?status=1&filecode=" + filecode + "&mp4file=http://cdn.jianpianzi.com/" + mp4Key;
                     byte[] bt = client.DownloadData(uri);
                     Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
 
@@ -911,7 +872,6 @@ namespace anyEncoder
                     this.AppendLog("上传失败，返回字符串为：" + retstring);
 
                 }
-                Thread.Sleep(5000);
 
             }
             catch (Exception ex)
