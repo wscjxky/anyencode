@@ -672,7 +672,7 @@ namespace anyEncoder
             if (!File.Exists(this.file_out))
             {
                 this.AppendLog("无文件退出,错误+1");
-                Conn.ExecuteNonQuery("update ov_files set stat=0 where id=" + this.id);
+                Conn.ExecuteNonQuery("update ov_files set stat=2 where id=" + this.id);
                 this.run_Canceled(null, null);
 
             }
